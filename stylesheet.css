@@ -1,0 +1,43 @@
+h1, h2, h3, h4, h5 {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  text-align: center;
+  padding: 20px;
+  font-family: monospace;
+}
+
+form {
+  margin: 10px auto;
+  max-width: 890px;
+  display: flex;
+}
+
+form input {
+  width: 100%;
+  padding: 10px
+}
+
+.todo_wrapper {
+  max-width: 890px;
+  margin: 20px auto;
+  padding: 5px;
+}
+.todo {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid black;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+.todo__title {
+  font-size: 21px;
+  font-weight: normal;
+}
+
+.todo__icons i {
+  padding: 5px;
+}
