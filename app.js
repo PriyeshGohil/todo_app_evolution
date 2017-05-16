@@ -1,4 +1,19 @@
+ // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCqwkCYQRUrpgS-jHKUQpnW4h2d4QaeIJA",
+    authDomain: "todo-app-evolution.firebaseapp.com",
+    databaseURL: "https://todo-app-evolution.firebaseio.com",
+    projectId: "todo-app-evolution",
+    storageBucket: "todo-app-evolution.appspot.com",
+    messagingSenderId: "93834775394"
+  };
+
+  firebase.initializeApp(config);
+
 const todoApp = function() {
+
+  const database = firebase.database();
+  const dbRef = database.ref('todos');
 
   function addItem(nme) {
     const todoObj = createTodoObj(nme);
@@ -33,6 +48,7 @@ const todoApp = function() {
 
 
   function saveToDatabase(todoObj) {
+    dbRef.child(todoObj.id).set(todoObj);
     localStorage.setItem(todoObj.id, JSON.stringify(todoObj));
   }
 
