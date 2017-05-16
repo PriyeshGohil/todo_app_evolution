@@ -76,7 +76,7 @@ const todoUI = (function() {
     });
   }
 
-  function addTodo() {
+  function addTodoHandler() {
     const submitBtn = formElements['todo-sumbit-btn'];
 
     submitBtn.addEventListener('click', function() {
@@ -153,7 +153,7 @@ const todoUI = (function() {
 
   function setup() {
     displayAll();
-    addTodo();
+    addTodoHandler();
     events();
   }
 
