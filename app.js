@@ -45,7 +45,7 @@ const todoApp = function() {
 
   
   function removeItem(todoId) {
-    localStorage.removeItem(todoId);
+    dbRef.child(todoId).remove();
   };
 
 
