@@ -25,16 +25,25 @@ const todoApp = function() {
     return JSON.parse(localStorage.getItem(todoId));
   }
 
-  function getAllItems() {
+  
+  function getAllItemsPromise() {
     const allItems = [];
+    
+    return new Promise(function(resolve, reject) {
+      
+      dbRef.on('value', function(snapshot) {
+        const SnapshotObj = snapshot.val();
+        
+        Object.keys(SnapshotObj).forEach(function(key, index) {
+          allItems.push(SnapshotObj[key]);
+        });
 
-    Object.keys(localStorage).forEach(function(key, index) {
-      allItems.push(getItem(key));
-    })
+        resolve(allItems);
+      })
+    });
+  };
 
-    return allItems;
-  }
-
+  
   function removeItem(todoId) {
     localStorage.removeItem(todoId);
   };
@@ -67,9 +76,9 @@ const todoApp = function() {
   return {
     addItem,
     getItem,
-    getAllItems,
     removeItem,
-    editItem
+    editItem,
+    getAllItemsPromise
   }
 
 };
@@ -82,14 +91,13 @@ const todoUI = (function() {
   const todoWrapperEl = document.querySelector('#todo-wrapper');
 
   function displayAll() {
-    const allTodoObjs = todos.getAllItems();
+    todos.getAllItemsPromise().then(function(allTodoObjs) {
+      todoWrapperEl.innerHTML = '';
 
-    // remove any todos
-    todoWrapperEl.innerHTML = '';
-
-    allTodoObjs.forEach(function(obj, index) {
-      renderHTML(obj.id, obj.name);
-    });
+      allTodoObjs.forEach(function(obj, index) {
+        renderHTML(obj.id, obj.name);
+      });
+    }); 
   }
 
   function addTodoHandler() {
@@ -174,7 +182,8 @@ const todoUI = (function() {
   }
 
   return {
-    setup
+    setup,
+    displayAll
   }
 
 })();
