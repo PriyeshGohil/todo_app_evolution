@@ -20,11 +20,6 @@ const todoApp = function() {
     saveToDatabase(todoObj);
   };
 
-
-  function getItem(todoId) {
-    return JSON.parse(localStorage.getItem(todoId));
-  }
-
   
   function getAllItemsPromise() {
     const allItems = [];
@@ -50,15 +45,12 @@ const todoApp = function() {
 
 
   function editItem(todoId, nme) {
-    const todoObj = getItem(todoId);
-    todoObj.name = nme;
-    saveToDatabase(todoObj);
+    dbRef.child(todoId).child('name').set(nme);
   }
 
 
   function saveToDatabase(todoObj) {
     dbRef.child(todoObj.id).set(todoObj);
-    localStorage.setItem(todoObj.id, JSON.stringify(todoObj));
   }
 
   function createTodoObj(nme) {
@@ -75,7 +67,6 @@ const todoApp = function() {
 
   return {
     addItem,
-    getItem,
     removeItem,
     editItem,
     getAllItemsPromise
